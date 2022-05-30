@@ -1,13 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import UserState from "./context/user-context/userState";
+import AppState from "./context/appContext/appState";
+import FeedState from "./context/feedContext/feedState";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AppState>
+      <UserState>
+        <FeedState>
+          <App />
+        </FeedState>
+      </UserState>
+    </AppState>
   </React.StrictMode>
 );
 
