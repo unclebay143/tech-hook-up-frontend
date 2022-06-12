@@ -21,19 +21,19 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
   return (
     <>
       <section
-        className=''
         onMouseOver={() => setHoverId(id)}
         onMouseLeave={() => {
           setHoverId(null);
         }}
       >
-        <div className='ring-1 cursor-pointer rindg-purple-700 rounded-full h-14 w-14 relative bg-prple-700 flex-shrink-0'>
+        {/* You can add - ring-purple-700 bg-purple-700 */}
+        <div className='relative flex-shrink-0 rounded-full cursor-pointer ring-1 h-14 w-14'>
           <img
             src={path}
             alt={alt}
-            className='rounded-full h-auto w-full object-cover'
+            className='object-cover w-full h-auto rounded-full'
           />
-          <span className='bg-red-500 text-sm h-5 font-semibold w-5 right-0 top-9 text-center absolute rounded-full text-white'>
+          <span className='absolute right-0 w-5 h-5 text-sm font-semibold text-center text-white bg-red-500 rounded-full top-9'>
             {rate}
           </span>
         </div>
@@ -43,11 +43,11 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
           <div
             className={`absolute ${top} hidden bg-gray-100 md:block ring-1 rounded-sm dark:bg-gray-900 ring-purple-700 shadow-lg z-50 w-64 h-auto p-3`}
           >
-            <div className='flex justify-between items-center'>
+            <div className='flex items-center justify-between'>
               <img
                 src={path}
                 alt={alt}
-                className='rounded-full object-cover w-20 h-20'
+                className='object-cover w-20 h-20 rounded-full'
               />
 
               {
@@ -55,14 +55,14 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
                 following ? (
                   <button
                     onClick={() => unfollowUser(id)}
-                    className='ring-1 font-semibold ring-purple-400 px-5 py-2 text-sm rounded-md bg-purple-700 text-white hover:bg-purple-800'
+                    className='px-5 py-2 text-sm font-semibold text-white bg-purple-700 rounded-md dark:text-white ring-1 dark:bg-transparent ring-purple-400 hover:bg-purple-800'
                   >
                     ✔ Following
                   </button>
                 ) : (
                   <button
                     onClick={() => followUser(id)}
-                    className='ring-1 font-semibold ring-purple-400 px-5 py-2 text-sm rounded-md bg-purple-700 text-white hover:bg-purple-800'
+                    className='px-5 py-2 text-sm font-semibold text-white bg-purple-700 rounded-md dark:text-white ring-1 dark:bg-transparent ring-purple-400 hover:bg-purple-800'
                   >
                     + Follow
                   </button>
@@ -77,23 +77,23 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
                   <span className='ml-2 text-xs text-purple-500'>Verified</span>
                 )}
               </h3>
-              <span className='text-gray-500 dark:text-gray-400 text-sm'>
+              <span className='text-sm text-gray-500 dark:text-gray-400'>
                 Backend Developer
               </span>
               <div className='text-xs'>
                 <span className='text-purple-500'>{hooksCount} Hooks</span>
                 {"﹒"}
-                <span className=' text-purple-500'>
+                <span className='text-purple-500 '>
                   {followersCount} followers
                 </span>
                 {"﹒"}
-                <span className=' text-purple-500'>
+                <span className='text-purple-500 '>
                   {followingCount} following
                 </span>
               </div>
 
               {/* send hook request */}
-              <button className='mt-3 w-full ring-1 font-semibold ring-purple-400 px-5 py-2 text-sm rounded-md bg-purple-700 text-white hover:bg-purple-800'>
+              <button className='w-full px-5 py-2 mt-3 text-sm font-semibold text-white bg-purple-700 rounded-md ring-1 ring-purple-400 hover:bg-purple-800'>
                 Send Hook Request
               </button>
             </section>

@@ -36,3 +36,22 @@ code {
 .custom-blue-bg{
   background-color: #83B8DB;
 }
+
+
+input:hover, 
+textarea:hover, 
+button:hover,
+textarea:active, 
+button:active,
+input:active, 
+.btn:active,
+.btn.active,
+input:focus,
+button:focus,
+label:focus,
+textarea:focus
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}

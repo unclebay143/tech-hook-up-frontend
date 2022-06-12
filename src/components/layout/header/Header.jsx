@@ -1,15 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../../theme/ThemeToggle";
 
 export const Header = () => {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
-      <section className='flex justify-between px-5 xl:px-7 dark:border-gray-800 py-5 custom-white-bg border-b border-gray-200 dark:bg-gray-900'>
+      <section className='flex justify-between px-5 py-5 border-b border-gray-200 xl:px-7 dark:border-gray-800 custom-white-bg dark:bg-gray-900'>
         <section className='flex items-center'>
-          <div className='shadow-2xl bg-white dark:bg-gray-600  rounded-full p-3 mr-2'>
+          <div className='p-3 mr-2 bg-white rounded-full shadow-2xl dark:bg-gray-600'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='h-6 w-6 text-purple-700 dark:text-white'
+              className='w-6 h-6 text-purple-700 dark:text-white'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -23,7 +25,7 @@ export const Header = () => {
             </svg>
           </div>
 
-          <h1 className='text-green-400 text-2xl font-bold'>
+          <h1 className='text-2xl font-bold text-green-400'>
             <span className='text-purple-700'>Tech</span>
             HookUp
           </h1>
@@ -40,7 +42,7 @@ export const Header = () => {
           <div className='mr-4'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='h-5 w-5 dark:text-gray-300 cursor-pointer dark:hover:text-gray-400  animate-pulse'
+              className='w-5 h-5 cursor-pointer dark:text-gray-300 dark:hover:text-gray-400 animate-pulse'
               viewBox='0 0 20 20'
               fill='currentColor'
             >
@@ -48,11 +50,16 @@ export const Header = () => {
             </svg>
           </div>
 
-          <div className='ring-2 ring-purple-700 rounded-full h-10 w-10'>
+          <div
+            className='w-10 h-10 rounded-full cursor-pointer ring-2 ring-purple-700'
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
             <img
               src='https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880'
               alt='profile'
-              className='rounded-full h-auto w-full object-cover'
+              className='object-cover w-full h-auto rounded-full'
             />
           </div>
         </section>

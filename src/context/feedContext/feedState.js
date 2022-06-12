@@ -1,10 +1,17 @@
 import FeedContext from "./feedContext";
 import { useReducer } from "react";
-import { LOAD_FEEDS } from "./feedTypes";
+import {
+  ADD_NEW_HOOK,
+  IS_PUBLISHING,
+  LOAD_FEEDS,
+  PUBLISH_SUCCESS,
+} from "./feedTypes";
 import FeedReducer from "./feedReducer";
 
 const initialState = {
   feeds: [],
+  myHooks: [],
+  isPublishing: false,
 };
 
 const FeedState = ({ children }) => {
@@ -16,9 +23,22 @@ const FeedState = ({ children }) => {
     dispatch({ type: LOAD_FEEDS, payload });
   };
 
+  const addNewHook = (payload) => {
+    dispatch({ type: IS_PUBLISHING });
+
+    setTimeout(() => {
+      dispatch({ type: ADD_NEW_HOOK, payload });
+    }, 5000);
+
+    setTimeout(() => {
+      dispatch({ type: PUBLISH_SUCCESS });
+    }, 10000);
+  };
+
   return (
     <FeedContext.Provider
       value={{
+        addNewHook,
         loadFeeds,
         ...state,
       }}

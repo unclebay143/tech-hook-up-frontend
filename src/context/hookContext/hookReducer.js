@@ -1,21 +1,12 @@
-import {
-  ADD_NEW_HOOK,
-  IS_PUBLISHING,
-  LOAD_FEEDS,
-  PUBLISH_SUCCESS,
-} from "./feedTypes";
+import { ADD_NEW_HOOK, IS_PUBLISHING, PUBLISH_SUCCESS } from "./hookTypes";
 
-const FeedReducer = (state, action) => {
+const HookReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case LOAD_FEEDS:
-      return { ...state, feeds: payload };
-
     case ADD_NEW_HOOK:
       return {
         ...state,
-        feeds: [payload, ...state.feeds],
         myHooks: [payload, ...state.myHooks],
       };
 
@@ -30,9 +21,10 @@ const FeedReducer = (state, action) => {
         ...state,
         isPublishing: false,
       };
+
     default:
       return state;
   }
 };
 
-export default FeedReducer;
+export default HookReducer;

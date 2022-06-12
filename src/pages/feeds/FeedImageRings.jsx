@@ -7,8 +7,8 @@ export const FeedImageRings = (props) => {
 
   return (
     <React.Fragment>
-      <section className='flex gap-4 p-4 h-28 overflow-x-hidden hover:overflow-x-scroll border-b dark:border-gray-800'>
-        {[...users, ...users]?.map((user, index) => {
+      <section className='flex gap-4 p-4 overflow-x-hidden border-b h-28 hover:overflow-x-scroll dark:border-gray-800'>
+        {[...users, ...users].slice(0, 16)?.map((user, index) => {
           const { avatar, first_name, id } = user;
           return (
             <ImageRing

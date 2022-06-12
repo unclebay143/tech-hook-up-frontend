@@ -1,16 +1,30 @@
-import React, { useContext, useEffect, useId } from "react";
-import { ImageRing } from "../../components/images/ImageRing";
+import React, { useContext, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { HookCard } from "../../components/hookcard/HookCard";
+import { NewHookLoader } from "../../components/loader/NewHookLoader";
 import FeedContext from "../../context/feedContext/feedContext";
+import HookContext from "../../context/hookContext/hookContext";
 import UserContext from "../../context/user-context/userContext";
 import FeedService from "../../service/feeds.service";
 import UserService from "../../service/user.service";
+import { HookFormModal } from "../new-hook-card/HookFormModal";
 import { FeedImageRings } from "./FeedImageRings";
 import { HookFeedCategory } from "./HookFeedCategory";
 
 export const Feeds = () => {
-  const keyId = useId();
   const { users, loadUsers } = useContext(UserContext);
   const { feeds, loadFeeds } = useContext(FeedContext);
+  const { isPublishing } = useContext(FeedContext);
+  const [searchParams, setSearchParam] = useSearchParams();
+
+  const shouldOpenCreateModal = searchParams.get("create");
+  let pageBody = document.body;
+  // Hide body scroll on modal open
+  if (shouldOpenCreateModal) {
+    pageBody.style.overflow = "hidden";
+  } else {
+    pageBody.style.overflow = "auto";
+  }
 
   useEffect(() => {
     // Self invoking function to load users on page load
@@ -36,139 +50,44 @@ export const Feeds = () => {
     // eslint-disable-next-line
   }, []);
 
-  console.log(feeds);
-
   return (
-    <div className='text-custom-light-white pt-7 col-span-full lg:col-span-3 overflow-y-scroll scrollbar-hide h-screen dark:bg-gray-900 border-x dark:border-gray-800 border-gray-200'>
-      <FeedImageRings users={users} />
-      {/* Hooks feed */}
-      <section className='px-5'>
-        <HookFeedCategory />
-        <div className='flex items-center justify-between my-7'>
-          <h3 className='text-md dark:text-gray-300 dark:font-semibold'>
-            My Feeds
-          </h3>
-          <button
-            className='
-            bg-purple-700
-            text-white
-            text-sm
-            font-semibold
-            py-2
-            px-4
-            rounded-full
-            shadow-md
-            hover:bg-purple-800
-            hover:shadow-lg
-            hover:text-white
-            hover:bg-opacity-75
-      '
-          >
-            Create +
-          </button>
-        </div>
-        <section className='my-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5'>
-          {[...feeds, ...feeds]?.map((feed, index) => {
-            const { description, author, authorBrief, image, bg, id, data } =
-              feed;
-
-            return (
-              //   <article
-              //   className={`h-56 w-62 bg-gray-200 shadow-sm hover:shadow-md cursor-pointer  rounded-md p-4`}
-              //   key={index}
-              // >
-              //   <section className='flex relative'>
-              //     <img
-              //       src={category.coverImage}
-              //       alt={category.name}
-              //       className='h-10 w-10 rounded-full object-cover'
-              //     />
-              //     <div className='ml-3'>
-              //       <h3 className='text-sm text-gray-800 font-semibold'>
-              //         {category.name}
-              //       </h3>
-              //     </div>
-              //   </section>
-              // </article>
-              <article
-                className={`h-56 w-62 ${bg} hover:bg-gray-200 shadow-sm hover:shadow-md cursor-pointer  rounded-md p-4 dark:hover:shadow-lg dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white`}
-                key={keyId + "3" + index}
-              >
-                <section className='flex relative'>
-                  {/* <img
-                    src={image}
-                    alt={author}
-                    className='h-10 w-10 rounded-full object-cover'
-                  /> */}
-
-                  <ImageRing
-                    path={image}
-                    alt={author}
-                    id={id}
-                    top='top-16'
-                    data={data}
-                  />
-                  <div className='ml-3'>
-                    <h3 className='text-sm text-gray-800 dark:text-gray-100 font-semibold'>
-                      {author}
-                    </h3>
-                    <p className='text-xs text-gray-600 dark:text-gray-300'>
-                      {authorBrief}{" "}
-                    </p>
-                  </div>
-                </section>
-
-                <section className='mt-5 pl-3'>
-                  <p className='text-sm text-gray-800 dark:text-gray-300'>
-                    {description}
-                  </p>
-                </section>
-
-                <section className='pl-3 mt-5 mx-auto'>
-                  <button className='bg-gray-900 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-gray-800 hover:shadow-lg hover:text-white hover:bg-opacity-75'>
-                    Apply
-                  </button>
-
-                  {/* <button className='ml-3 bg-purple-700 text-white text-xs font-semibold py-2 px-4 rounded-full shadow-md hover:bg-purple-800 hover:shadow-lg hover:text-white hover:bg-opacity-75'>
-                  View
-                </button> */}
-                </section>
-              </article>
-            );
-          })}
-        </section>
-        <section className='hidden grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2'>
-          <div className='grid grid-cols-1 md:grid-cols-1 2xl:grid-cols-2 gap-5'>
-            {feeds?.slice(0, 2)?.map(({ title, description, bg }, index) => (
-              <article
-                className={`h-56 w-62 ${bg} rounded-md p-4 text-white`}
-                key={keyId + "4" + index}
-              >
-                <h3>{title}</h3>
-                <p> {description} </p>
-              </article>
-            ))}
-          </div>
-          <div className='lg:pl-3 mt-5 lg:mt-0'>
-            <article className='h-56 w-62 lg:h-full custom-yellow-bg rounded-md p-4'>
-              <h3>{feeds[1]?.first_name}</h3>
-              <p> {feeds[1]?.first_name} </p>
-            </article>
-          </div>
-        </section>
-
-        <section className='hidden my-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5'>
-          {feeds?.map(({ first_name }, index) => (
-            <article
-              className='h-56 w-62 custom-yellow-bg ring-2 rounded-xl p-4'
-              key={keyId + "5" + index}
+    <>
+      <div className='h-screen overflow-y-scroll border-gray-200 text-custom-light-white pt-7 col-span-full lg:col-span-3 scrollbar-hide dark:bg-gray-900 border-x dark:border-gray-800'>
+        <FeedImageRings users={users} />
+        {/* Hooks feed */}
+        <section className='px-5'>
+          <HookFeedCategory />
+          {isPublishing && <NewHookLoader />}
+          <div className='flex items-center justify-between my-7'>
+            <h3 className='text-md dark:text-gray-300 dark:font-semibold'>
+              My Feeds
+            </h3>
+            <Link
+              to={{ pathname: "/", search: "?create=true" }}
+              className='px-4 py-2 text-sm font-semibold text-white bg-purple-700 rounded-full shadow-md hover:bg-purple-800 hover:shadow-lg hover:text-white hover:bg-opacity-75'
             >
-              <h3>{first_name}</h3>
-              <p> {first_name} </p>
-            </article>
-          ))}
+              Create +
+            </Link>
+          </div>
+          <section className='grid grid-cols-1 gap-5 my-10 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
+            <HookCard data={[...feeds, ...feeds]} sliceStart={0} sliceEnd={2} />
+          </section>
+          <section className='grid grid-cols-1 mb-10 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2'>
+            <div className='grid grid-cols-1 gap-5 md:grid-cols-1 2xl:grid-cols-2'>
+              <HookCard data={feeds} sliceStart={0} sliceEnd={2} slice />
+            </div>
+            <div className='mt-5 lg:pl-3 lg:mt-0'>
+              <article className='h-56 p-4 rounded-md w-62 lg:h-full custom-yellow-bg'>
+                <h3>{feeds[1]?.first_name}</h3>
+                <p> {feeds[1]?.first_name} </p>
+              </article>
+            </div>
+          </section>
         </section>
-      </section>
-    </div>
+      </div>
+
+      {/* // New Hook Form - Modal */}
+      {shouldOpenCreateModal && <HookFormModal />}
+    </>
   );
 };

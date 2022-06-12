@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useContext } from "react";
 import AppContext from "./context/appContext/appContext";
 import Solution from "./pages/MoralisTest";
+import { HookFormModal } from "./pages/new-hook-card/HookFormModal";
+import Login from "./pages/login";
 
 function App() {
   const { isDarkMode } = useContext(AppContext);
@@ -26,15 +28,14 @@ function App() {
     // <Solution menuConfig={menuConfig} />
     <div className={`${isDarkMode ? "dark" : null}`}>
       <div className='dark:bg-gray-900'>
-        <div className=''>
-          <BrowserRouter>
-            <Routes>
-              <Route path='/' element={<FeedLayout />}>
-                <Route index element={<Feeds />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<FeedLayout />}>
+              <Route index element={<Feeds />} />
+            </Route>
+            <Route path='login' element={<Login />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </div>
   );
