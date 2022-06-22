@@ -2,14 +2,14 @@ import React from "react";
 import { ImageRing } from "../images/ImageRing";
 
 export const HookCard = ({ data, slice, sliceStart, sliceEnd }) => {
-  const shouldSlice = slice && data?.slice(sliceStart, sliceEnd);
+  const sliceData = slice && data?.slice(sliceStart, sliceEnd);
   return (
-    <>
-      {(shouldSlice || data)?.map((datum) => {
+    <React.Fragment>
+      {(sliceData || data)?.map((datum) => {
         const { description, author, authorBrief, image, bg, id, data } = datum;
         return (
           <article
-            key={Math.random() * 100}
+            key={Math.random() * 100} // Todo remove this key when we have a real id
             className={`h-56 w-62 ${bg} hover:bg-gray-200 shadow-sm hover:shadow-md cursor-pointer rounded-md p-4 dark:hover:shadow-lg dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white`}
           >
             <section className='relative flex'>
@@ -44,6 +44,6 @@ export const HookCard = ({ data, slice, sliceStart, sliceEnd }) => {
           </article>
         );
       })}
-    </>
+    </React.Fragment>
   );
 };

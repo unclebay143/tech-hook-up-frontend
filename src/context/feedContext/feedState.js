@@ -28,11 +28,8 @@ const FeedState = ({ children }) => {
 
     setTimeout(() => {
       dispatch({ type: ADD_NEW_HOOK, payload });
-    }, 5000);
-
-    setTimeout(() => {
       dispatch({ type: PUBLISH_SUCCESS });
-    }, 10000);
+    }, 5000);
   };
 
   return (

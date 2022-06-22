@@ -6,6 +6,8 @@ import styles from "./login.module.css";
 export const Login = () => {
   const navigate = useNavigate();
   const [signingIn, setSigningIn] = React.useState(false);
+  const [knownAccount, setKnownAccount] = React.useState(true);
+  const [openMenu, setOpenMenu] = React.useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -39,38 +41,64 @@ export const Login = () => {
             </svg>
           </section>
         ) : (
-          <section className='w-11/12 p-10 mx-auto bg-white rounded-sm md:w-1/2 lg:w-1/3 dark:bg-gray-800'>
+          <section className='w-11/12 p-10 mx-auto bg-white rounded-sm md:w-1/2 lg:w-1/3 2xl:w-1/4 dark:bg-gray-800'>
             <h1 className='text-xl font-bold dark:text-white'>Welcome back</h1>
-            <button
-              onClick={handleLogin}
-              className='flex items-center justify-between w-full p-1 px-2 my-5 border-2 rounded'
-            >
-              <div className='flex items-center'>
-                <div className='w-10 h-10'>
-                  <img
-                    src='https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880'
-                    alt='profile'
-                    className='object-cover w-full h-auto rounded-full'
-                  />
+            {knownAccount && (
+              <button className='flex items-center justify-between w-full p-1 px-2 mt-5 border-2 rounded'>
+                <div className='flex items-center' onClick={handleLogin}>
+                  <div className='w-10 h-10'>
+                    <img
+                      src='https://github.com/unclebay143.png'
+                      alt='profile'
+                      className='object-cover w-full h-auto rounded-full'
+                    />
+                  </div>
+                  <h3 className='ml-3 text-sm font-bold text-left dark:text-white'>
+                    Continue as:{" "}
+                    <span className='font-medium text-purple-700 dark:text-white'>
+                      uncle*****@gmail.com
+                    </span>
+                  </h3>
                 </div>
-                <h3 className='ml-3 text-sm font-bold text-left dark:text-white'>
-                  Continue as:{" "}
-                  <span className='font-medium text-purple-700 dark:text-white'>
-                    uncle*****@gmail.com
-                  </span>
-                </h3>
-              </div>
 
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='w-5 h-5 text-gray-500'
-                viewBox='0 0 20 20'
-                fill='currentColor'
-              >
-                <path d='M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z' />
-              </svg>
-            </button>
-            <form>
+                {/* dropdown */}
+                <div className='relative'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='w-5 h-5 text-gray-500'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    onClick={() => setOpenMenu(!openMenu)}
+                  >
+                    <path d='M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z' />
+                  </svg>
+
+                  {openMenu && (
+                    <div
+                      className='absolute right-0 z-50 w-56 mt-2 -mr-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg dark:border dark:border-gray-800 dark:divide-gray-800 dark:bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none'
+                      role='menu'
+                      aria-orientation='vertical'
+                      aria-labelledby='menu-button'
+                      tabIndex={-1}
+                      onClick={() => setKnownAccount(false)}
+                    >
+                      <div className='py-1' role='none'>
+                        <a
+                          href='#'
+                          className='block px-4 py-2 text-xs text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-500'
+                          role='menuitem'
+                          tabIndex={-1}
+                          id='menu-item-0'
+                        >
+                          Remove account from this device
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </button>
+            )}
+            <form className='mt-5'>
               <div className='mb-4'>
                 <label
                   className='block mb-2 text-sm font-bold text-gray-700 dark:text-white'
@@ -83,6 +111,7 @@ export const Login = () => {
                   id='username'
                   type='text'
                   placeholder='Username'
+                  autoComplete='off'
                 />
               </div>
               <div className='mb-6'>
@@ -98,6 +127,7 @@ export const Login = () => {
                   id='password'
                   type='password'
                   placeholder='******************'
+                  autoComplete='off'
                 />
                 <p className='hidden text-xs italic text-red-500'>
                   Please choose a password.

@@ -15,6 +15,8 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
   // hover id
   const [hoverId, setHoverId] = React.useState(null);
   const { unfollowUser, followUser } = useContext(UserContext);
+  // isCheckingProfile
+  const [isCheckingProfile, setIsCheckingProfile] = React.useState(false);
 
   // ! Rending rate might be too high
 
@@ -27,7 +29,12 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
         }}
       >
         {/* You can add - ring-purple-700 bg-purple-700 */}
-        <div className='relative flex-shrink-0 rounded-full cursor-pointer ring-1 h-14 w-14'>
+        <div
+          className='relative flex-shrink-0 p-1 rounded-full cursor-pointer ring-2 ring-purple-700 h-14 w-14'
+          // onClick={() => {
+          //   setIsCheckingProfile(!isCheckingProfile);
+          // }}
+        >
           <img
             src={path}
             alt={alt}
@@ -39,7 +46,7 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
         </div>
 
         {/* Hover profile */}
-        {hoverId === id ? (
+        {hoverId === id || isCheckingProfile ? (
           <div
             className={`absolute ${top} hidden bg-gray-100 md:block ring-1 rounded-sm dark:bg-gray-900 ring-purple-700 shadow-lg z-50 w-64 h-auto p-3`}
           >

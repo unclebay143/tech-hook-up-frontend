@@ -1,0 +1,33 @@
+/* https://avocadev.hashnode.dev/create-skeleton-loading-animation-with-css-and-reactjs */
+
+.authorsection {
+  display: flex;
+  gap: 10px;
+}
+
+.image {
+  height: 3rem;
+  aspect-ratio: 1; /* same width as height */
+  background-color: #dee2e6;
+  border-radius: 100%;
+}
+
+.name,
+.authorbrief,
+.post {
+  border-radius: 8px;
+  background-color: #dee2e6;
+}
+
+.name {
+  margin-bottom: 14px;
+}
+
+.post {
+  margin-left: 12px;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #dee2e6;
+}

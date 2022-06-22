@@ -8,7 +8,7 @@ export const ThemeToggle = () => {
       {isDarkMode ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='h-7 w-7 dark:text-gray-300 dark:hover:text-gray-400'
+          className='text-gray-600 h-7 w-7 dark:text-gray-300 dark:hover:text-gray-400'
           viewBox='0 0 20 20'
           fill='currentColor'
           onClick={toggleDarkMode}
@@ -22,7 +22,7 @@ export const ThemeToggle = () => {
       ) : (
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          className='h-5 w-5 dark:text-gray-300 dark:hover:text-gray-400'
+          className='w-5 h-5 text-gray-600 dark:text-gray-300 dark:hover:text-gray-400'
           viewBox='0 0 20 20'
           fill='currentColor'
           onClick={toggleDarkMode}

@@ -42,9 +42,9 @@ export const HookFormModal = () => {
       >
         <div className='relative w-full h-full max-w-2xl p-4 pt-16 mx-auto md:h-auto'>
           {/* Modal content */}
-          <div className='relative bg-white rounded-lg shadow dark:bg-gray-700'>
+          <div className='relative bg-white rounded-sm shadow dark:bg-gray-700'>
             {/* Modal header */}
-            <div className='flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600'>
+            <div className='flex items-start justify-between p-4 border-b dark:border-gray-600'>
               <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
                 Create a new hook
               </h3>
@@ -73,7 +73,7 @@ export const HookFormModal = () => {
               <textarea
                 maxLength={80}
                 onChange={(e) => setText(e.target.value)}
-                className='w-full overflow-hidden text-lg leading-relaxed text-gray-500 border-none shadow-none focus:outline-none h-60 max-h-60 dark:text-gray-400 dark:bg-gray-800'
+                className='w-full overflow-hidden leading-relaxed text-gray-500 border-none rounded shadow-none text-md focus:outline-none h-60 max-h-60 dark:text-gray-400 dark:bg-gray-800'
                 placeholder='What do you want to talk about?'
               ></textarea>
             </div>
