@@ -1,6 +1,6 @@
 import React from "react";
 
-export const TrendingListTagsSkeletons = ({ count = 1 }) => {
+export const TrendingTagsListWidgetSkeleton = ({ count = 1 }) => {
   return (
     <section className='mt-10'>
       <ul className='mt-5'>

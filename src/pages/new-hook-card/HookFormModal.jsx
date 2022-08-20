@@ -1,8 +1,8 @@
 import React, { useContext, useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import FeedContext from "../../context/feedContext/feedContext";
-import FeedReducer from "../../context/feedContext/feedReducer";
-import { IS_PUBLISHING } from "../../context/feedContext/feedTypes";
+import FeedContext from "../../helper/context/feedContext/feedContext";
+import FeedReducer from "../../helper/context/feedContext/feedReducer";
+import { IS_PUBLISHING } from "../../helper/context/feedContext/feedTypes";
 
 export const HookFormModal = () => {
   const navigate = useNavigate();
@@ -32,17 +32,17 @@ export const HookFormModal = () => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       {/* Main modal */}
       <div
         id='defaultModal'
         tabIndex={-1}
         aria-hidden='false'
-        className='fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-hidden bg-black bg-opacity-75 md:inset-0 h-modal md:h-full'
+        className='fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-hidden bg-black bg-opacity-75 md:inset-0 h-modal md:h-full' // overlay
       >
         <div className='relative w-full h-full max-w-2xl p-4 pt-16 mx-auto md:h-auto'>
           {/* Modal content */}
-          <div className='relative bg-white rounded-sm shadow dark:bg-gray-700'>
+          <div className='relative bg-white rounded-sm shadow dark:bg-gray-900'>
             {/* Modal header */}
             <div className='flex items-start justify-between p-4 border-b dark:border-gray-600'>
               <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
@@ -74,7 +74,7 @@ export const HookFormModal = () => {
                 maxLength={80}
                 onChange={(e) => setText(e.target.value)}
                 className='w-full overflow-hidden leading-relaxed text-gray-500 border-none rounded shadow-none text-md focus:outline-none h-60 max-h-60 dark:text-gray-400 dark:bg-gray-800'
-                placeholder='What do you want to talk about?'
+                placeholder='What do you need or want to talk about?'
               ></textarea>
             </div>
             {/* Modal footer */}
@@ -94,6 +94,6 @@ export const HookFormModal = () => {
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };

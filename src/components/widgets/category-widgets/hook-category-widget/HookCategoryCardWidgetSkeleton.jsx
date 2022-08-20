@@ -1,6 +1,6 @@
 import React from "react";
 
-export const HookCategorySuggestionSkeleton = ({ count = 1 }) => {
+export const HookCategoryCardWidgetSkeleton = ({ count = 1 }) => {
   return (
     <React.Fragment>
       <section className='grid grid-cols-1 gap-5 md:grid-cols-2'>
@@ -13,7 +13,7 @@ export const HookCategorySuggestionSkeleton = ({ count = 1 }) => {
               </div>
             </section>
 
-            <div className='p-1 mr-5 bg-gray-300 rounded-full dark:bg-gray-700 hover:bg-gray-400'>
+            <div className='p-1 mr-5 text-white bg-gray-300 rounded-full dark:bg-gray-700 hover:bg-gray-400'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='w-5 h-5'

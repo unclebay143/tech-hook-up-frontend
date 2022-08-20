@@ -1,7 +1,9 @@
+import { Formik } from "formik";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ConnectButton } from "../../components/buttons/ConnectButton";
 import { GoogleButton } from "../../components/buttons/GoogleButton";
+import UserService from "../../helper/service/user.service";
 import styles from "./login.module.css";
 export const Login = () => {
   const navigate = useNavigate();
@@ -12,10 +14,12 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setSigningIn(true);
-    setTimeout(() => {
-      setSigningIn(false);
-      navigate("/");
-    }, 2000);
+
+    UserService.loginWithPassword();
+    // setTimeout(() => {
+    //   setSigningIn(false);
+    //   navigate("/");
+    // }, 2000);
   };
   return (
     <React.Fragment>
@@ -98,68 +102,102 @@ export const Login = () => {
                 </div>
               </button>
             )}
-            <form className='mt-5'>
-              <div className='mb-4'>
-                <label
-                  className='block mb-2 text-sm font-bold text-gray-700 dark:text-white'
-                  htmlFor='username'
-                >
-                  Username
-                </label>
-                <input
-                  className='w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
-                  id='username'
-                  type='text'
-                  placeholder='Username'
-                  autoComplete='off'
-                />
-              </div>
-              <div className='mb-6'>
-                <label
-                  className='block mb-2 text-sm font-bold text-gray-700 dark:text-white'
-                  htmlFor='password'
-                >
-                  Password
-                </label>
-                {/* has error: border-red-500 */}
-                <input
-                  className='w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
-                  id='password'
-                  type='password'
-                  placeholder='******************'
-                  autoComplete='off'
-                />
-                <p className='hidden text-xs italic text-red-500'>
-                  Please choose a password.
-                </p>
-              </div>
-              <div>
-                <button
-                  onClick={handleLogin}
-                  className='w-full px-4 py-2 text-sm font-bold text-white bg-purple-700 rounded hover:bg-purple-800 focus:outline-none focus:shadow-outline'
-                >
-                  Sign In
-                </button>
-                <a
-                  className='inline-block mt-2 text-sm font-bold text-purple-500 align-baseline dark:text-white hover:text-purple-800'
-                  href='#'
-                >
-                  Forgot Password?
-                </a>
-              </div>
 
-              <div className='flex items-center my-5'>
-                <div className='flex-grow bg bg-gray-300 h-0.5'></div>
-                <div className='flex-grow-0 mx-5 text dark:text-white'>or</div>
-                <div className='flex-grow bg bg-gray-300 h-0.5'></div>
-              </div>
-              <section>
-                <div>
-                  <GoogleButton />
-                  <ConnectButton handleClick={handleLogin} />
-                </div>
-              </section>
-            </form>
+            <Formik
+              initialValues={{ userName: "", passWord: "" }}
+              onSubmit={(values, { setSubmitting }) => {
+                UserService.loginWithPassword(values, setSubmitting);
+              }}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isSubmitting,
+                /* and other goodies */
+              }) => (
+                <form onSubmit={handleSubmit} className='mt-5'>
+                  <div className='mb-4'>
+                    <label
+                      className='block mb-2 text-sm font-bold text-gray-700 dark:text-white'
+                      htmlFor='username'
+                    >
+                      Username
+                    </label>
+                    <input
+                      className='w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
+                      id='username'
+                      type='text'
+                      placeholder='Username'
+                      autoComplete='off'
+                      name='userName'
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className='mb-6'>
+                    <label
+                      className='block mb-2 text-sm font-bold text-gray-700 dark:text-white'
+                      htmlFor='password'
+                    >
+                      Password
+                    </label>
+                    {/* has error: border-red-500 */}
+                    <input
+                      className='w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
+                      id='password'
+                      type='password'
+                      placeholder='******************'
+                      autoComplete='off'
+                      name='passWord'
+                      onChange={handleChange}
+                    />
+                    <p className='hidden text-xs italic text-red-500'>
+                      Please choose a password.
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      // onClick={handleLogin}
+                      type='submit'
+                      className='w-full px-4 py-2 text-sm font-bold text-white bg-purple-700 rounded hover:bg-purple-800 focus:outline-none focus:shadow-outline'
+                    >
+                      Sign In
+                    </button>
+                    <a
+                      className='inline-block mt-2 text-sm font-bold text-purple-500 align-baseline dark:text-white hover:text-purple-800'
+                      href='#'
+                    >
+                      Forgot Password?
+                    </a>
+                  </div>
+
+                  <div className='flex items-center my-5'>
+                    <div className='flex-grow bg bg-gray-300 h-0.5'></div>
+                    <div className='flex-grow-0 mx-5 text dark:text-white'>
+                      or
+                    </div>
+                    <div className='flex-grow bg bg-gray-300 h-0.5'></div>
+                  </div>
+                  <section>
+                    <div>
+                      <GoogleButton authType={"signin"} />
+                      <ConnectButton handleClick={handleLogin} />
+                    </div>
+                  </section>
+                  <section className='text-center'>
+                    <Link
+                      className='text-sm text-center dark:text-white'
+                      to='/signup'
+                    >
+                      Signup
+                    </Link>
+                  </section>
+                </form>
+              )}
+            </Formik>
           </section>
         )}
       </div>

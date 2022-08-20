@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { HookCard } from "../../components/hookcard/HookCard";
-import HookCardSkeleton from "../../components/hookcard/HookCardSkeleton";
+import { DayTimeGreetings } from "../../components/greetings/DayTimeGreetings";
+import { HookCard } from "../../components/hook-card/HookCard";
+import HookCardSkeleton from "../../components/hook-card/HookCardSkeleton";
 import { NewHookLoader } from "../../components/loader/NewHookLoader";
-import FeedContext from "../../context/feedContext/feedContext";
-import HookContext from "../../context/hookContext/hookContext";
-import UserContext from "../../context/user-context/userContext";
-import FeedService from "../../service/feeds.service";
-import UserService from "../../service/user.service";
+import { HookCategoryCardWidget } from "../../components/widgets/category-widgets/hook-category-widget/HookCategoryCardWidget";
+import FeedContext from "../../helper/context/feedContext/feedContext";
+import UserContext from "../../helper/context/user-context/userContext";
+import FeedService from "../../helper/service/feeds.service";
+import UserService from "../../helper/service/user.service";
 import { HookFormModal } from "../new-hook-card/HookFormModal";
 import { FeedImageRings } from "./FeedImageRings";
-import { HookCategorySuggestion } from "./HookCategorySuggestion";
 
 export const Feeds = () => {
   const { users, loadUsers } = useContext(UserContext);
+  const [isFetchingUsers, setIsFetchingUsers] = useState(true);
   const { feeds, loadFeeds } = useContext(FeedContext);
   const { isPublishing } = useContext(FeedContext);
   const [searchParams, setSearchParam] = useSearchParams();
@@ -29,15 +30,18 @@ export const Feeds = () => {
   }
 
   useEffect(() => {
-    // Self invoking function to load users on page load
-    (async function () {
-      const res = await Promise.all([
-        UserService.fetchUsers(1), // page 1
-        UserService.fetchUsers(2), // page 2
-      ]);
+    setTimeout(() => {
+      // Self invoking function to load users on page load
+      (async function () {
+        const res = await Promise.all([
+          UserService.fetchUsers(1), // page 1
+          UserService.fetchUsers(2), // page 2
+        ]);
 
-      loadUsers([...res[0], ...res[1]]);
-    })();
+        loadUsers([...res[0], ...res[1]]);
+        setIsFetchingUsers(false);
+      })();
+    }, 3000);
 
     // loadUsers cause infinite loop
     // eslint-disable-next-line
@@ -59,13 +63,14 @@ export const Feeds = () => {
   return (
     <React.Fragment>
       <div className='h-screen overflow-y-scroll border-gray-200 text-custom-light-white pt-7 col-span-full lg:col-span-3 scrollbar-hide dark:bg-gray-900 border-x dark:border-gray-800'>
-        <FeedImageRings users={users} />
+        <FeedImageRings users={users} isFetchingUsers={isFetchingUsers} />
         {/* Hooks feed */}
         <section className='px-5'>
-          <HookCategorySuggestion />
+          <DayTimeGreetings />
+          <HookCategoryCardWidget />
           {isPublishing && <NewHookLoader />}
           <div className='flex items-center justify-between my-7'>
-            <h3 className='text-md dark:text-gray-300 dark:font-semibold'>
+            <h3 className='text-md dark:text-gray-300 font-semibold'>
               My Feeds
             </h3>
             <Link

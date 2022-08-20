@@ -47,7 +47,7 @@ export const Activities = ({ isFetchingHookStat, data }) => {
                     {hook.hashTag}
                   </span>
                   <span
-                    className={`text-xs text-left w-full ${
+                    className={`text-xs text-left w-full 2xl:w-auto ${
                       hook.isTrending ? "text-white" : "text-gray-500"
                     }`}
                   >

@@ -1,9 +1,34 @@
 import axiosConfig from "./axios.config";
 
+const signUpWithPassword = async (values, setSubmitting) => {
+  try {
+    const { userName, passWord } = values;
+    const res = await axiosConfig.post("/users", { userName, passWord });
+    setSubmitting(false);
+    alert("Sign up successfully");
+  } catch (error) {
+    console.log(error.response.data.message);
+    setSubmitting(false);
+    throw error.response.data.message;
+  }
+};
+
 // fetch all users
 const fetchUsers = async (page) => {
   try {
     const res = await axiosConfig.get(`/?page=${page}`);
+
+    const randomTechRole = [
+      "Frontend Developer",
+      "Backend Developer",
+      "Fullstack Developer",
+      "Product Manager",
+      "Project Manager",
+      "UX Designer",
+      "UI Designer",
+      "QA Engineer",
+      "DevOps Engineer",
+    ];
 
     // randomly add follow property to the res.data.data
     const users = res.data.data
@@ -17,6 +42,8 @@ const fetchUsers = async (page) => {
           hooksCount: Math.floor(Math.random() * 5),
           rate: Math.floor(Math.random() * 5) + 1,
           verified: Math.random() > 0.5,
+          techRole:
+            randomTechRole[Math.floor(Math.random() * randomTechRole.length)],
         };
       });
     return users;
@@ -27,6 +54,7 @@ const fetchUsers = async (page) => {
 
 const UserService = {
   fetchUsers,
+  signUpWithPassword,
 };
 
 export default UserService;

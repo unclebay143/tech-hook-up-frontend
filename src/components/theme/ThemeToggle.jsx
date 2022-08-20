@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import AppContext from "../../context/appContext/appContext";
+import AppContext from "../../helper/context/appContext/appContext";
 
 export const ThemeToggle = () => {
   const { isDarkMode, toggleDarkMode } = useContext(AppContext);
