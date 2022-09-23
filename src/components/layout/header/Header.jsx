@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FaLaptopCode } from "react-icons/fa";
+import UserService from "../../../helper/service/user.service";
 import { ThemeToggle } from "../../theme/ThemeToggle";
 
 export const Header = () => {
-  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <React.Fragment>
       <section className='flex justify-between px-5 py-5 border-b border-gray-200 xl:px-7 dark:border-gray-800 custom-white-bg dark:bg-gray-900'>
         <section className='flex items-center'>
           <div className='p-3 mr-2 bg-white rounded-full shadow-2xl dark:bg-gray-600'>
+            <FaLaptopCode className='w-6 h-6 text-purple-700 dark:text-white' />
+          </div>
+          {/* <div className='p-3 mr-2 bg-white rounded-full shadow-2xl dark:bg-gray-600'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               className='w-6 h-6 text-purple-700 dark:text-white'
@@ -24,9 +27,9 @@ export const Header = () => {
                 d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4'
               />
             </svg>
-          </div>
+          </div> */}
 
-          <h1 className='text-2xl font-bold text-green-400'>
+          <h1 className='text-2xl font-bold text-green-400 ComicSansMSFont'>
             <span className='text-purple-700'>Tech</span>
             HookUp
           </h1>
@@ -100,9 +103,7 @@ export const Header = () => {
 
                 <div className='py-1' role='none'>
                   <button
-                    onClick={() => {
-                      navigate("/login");
-                    }}
+                    onClick={() => UserService.logOut()}
                     className='flex items-center w-full gap-1 px-4 py-2 text-sm font-semibold text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-500'
                     role='menuitem'
                     tabIndex={-1}

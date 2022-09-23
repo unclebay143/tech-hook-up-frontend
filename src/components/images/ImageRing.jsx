@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import UserContext from "../../context/user-context/userContext";
+import UserContext from "../../helper/context/user-context/userContext";
 
-export const ImageRing = ({ id, path, alt, data, top }) => {
+export const ImageRing = ({ id, path, alt, data, top, showRating = true }) => {
   const {
     first_name,
     last_name,
@@ -21,7 +21,7 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
   // ! Rending rate might be too high
 
   return (
-    <>
+    <React.Fragment>
       <section
         onMouseOver={() => setHoverId(id)}
         onMouseLeave={() => {
@@ -40,9 +40,12 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
             alt={alt}
             className='object-cover w-full h-auto rounded-full'
           />
-          <span className='absolute right-0 w-5 h-5 text-sm font-semibold text-center text-white bg-red-500 rounded-full top-9'>
-            {rate}
-          </span>
+
+          {showRating && (
+            <span className='absolute right-0 w-5 h-5 text-sm font-semibold text-center text-white bg-red-500 rounded-full top-9'>
+              {rate}
+            </span>
+          )}
         </div>
 
         {/* Hover profile */}
@@ -107,6 +110,6 @@ export const ImageRing = ({ id, path, alt, data, top }) => {
           </div>
         ) : null}
       </section>
-    </>
+    </React.Fragment>
   );
 };

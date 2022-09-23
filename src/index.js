@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import UserState from "./context/user-context/userState";
-import AppState from "./context/appContext/appState";
-import FeedState from "./context/feedContext/feedState";
+import UserState from "./helper/context/user-context/userState";
+import AppState from "./helper/context/appContext/appState";
+import FeedState from "./helper/context/feedContext/feedState";
+import TagState from "./helper/context/tagContext/tagState";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <AppState>
       <UserState>
         <FeedState>
-          <App />
+          <TagState>
+            <App />
+          </TagState>
         </FeedState>
       </UserState>
     </AppState>
