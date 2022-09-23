@@ -1,9 +1,19 @@
-import { FOLLOW_USER, LOAD_USERS, UN_FOLLOW_USER } from "./userTypes";
+import {
+  FOLLOW_USER,
+  LOAD_USERS,
+  UN_FOLLOW_USER,
+  LOAD_USER_PROFILE,
+} from "./userTypes";
 
 const UserReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case LOAD_USER_PROFILE:
+      return {
+        ...state,
+        user: payload,
+      };
     case LOAD_USERS:
       return { ...state, users: payload };
 

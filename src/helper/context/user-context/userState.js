@@ -1,16 +1,28 @@
 import { useReducer } from "react";
 import UserContext from "./userContext";
 import UserReducer from "./userReducer";
-import { FOLLOW_USER, LOAD_USERS, UN_FOLLOW_USER } from "./userTypes";
+import {
+  FOLLOW_USER,
+  LOAD_USERS,
+  UN_FOLLOW_USER,
+  LOAD_USER_PROFILE,
+} from "./userTypes";
 
 const UserState = ({ children }) => {
   const initialState = {
     // Mock data for skeleton
+    user: {},
     users: new Array(15).fill({}),
+    isLoggedIn: false,
   };
 
   // Reducer
   const [state, dispatch] = useReducer(UserReducer, initialState);
+
+  // Fetch user profile
+  const loadUserProfile = (payload) => {
+    dispatch({ type: LOAD_USER_PROFILE, payload });
+  };
 
   // Fetch Hookers
   const loadUsers = (payload) => {
@@ -33,6 +45,7 @@ const UserState = ({ children }) => {
         loadUsers,
         followUser,
         unfollowUser,
+        loadUserProfile,
         ...state,
       }}
     >

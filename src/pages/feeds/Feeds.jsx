@@ -13,7 +13,7 @@ import { HookFormModal } from "../new-hook-card/HookFormModal";
 import { FeedImageRings } from "./FeedImageRings";
 
 export const Feeds = () => {
-  const { users, loadUsers } = useContext(UserContext);
+  const { user, users, loadUsers, loadUserProfile } = useContext(UserContext);
   const [isFetchingUsers, setIsFetchingUsers] = useState(true);
   const { feeds, loadFeeds } = useContext(FeedContext);
   const { isPublishing } = useContext(FeedContext);
@@ -43,6 +43,13 @@ export const Feeds = () => {
       })();
     }, 3000);
 
+    // // Load user profile
+    // UserService.loadProfileByJWT()
+    //   .then((response) => {
+    //     loadUserProfile(response);
+    //   })
+    //   .catch((error) => console.log(error));
+
     // loadUsers cause infinite loop
     // eslint-disable-next-line
   }, []);
@@ -70,7 +77,7 @@ export const Feeds = () => {
           <HookCategoryCardWidget />
           {isPublishing && <NewHookLoader />}
           <div className='flex items-center justify-between my-7'>
-            <h3 className='text-md dark:text-gray-300 font-semibold'>
+            <h3 className='font-semibold text-md dark:text-gray-300'>
               My Feeds
             </h3>
             <Link

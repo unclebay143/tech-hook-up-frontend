@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ConnectButton } from "../../components/buttons/ConnectButton";
 import { GoogleButton } from "../../components/buttons/GoogleButton";
+import HotToast from "../../helper/notification/hot-toast";
 import axiosConfig from "../../helper/service/axios.config";
 import UserService from "../../helper/service/user.service";
 import UserSchema from "../../helper/validation/user.schema";
@@ -20,7 +21,7 @@ export const Signup = () => {
     setSigningUp(true);
     setTimeout(() => {
       setSigningUp(false);
-      navigate("/");
+      navigate("/onboard");
     }, 2000);
   };
 
@@ -33,18 +34,31 @@ export const Signup = () => {
       }, wait);
     };
   }
-
   // function to check if the username is taken
   const checkUsername = async (username) => {
     try {
-      if (username.length < 4) return;
+      if (username.length < 4) return; // if the username is less than 4 characters, don't check
+
+      //
+      if (username.match(/\s/g)) {
+        return setUserNameAvailability({
+          status: false,
+          message: "Username cannot contain spaces",
+        });
+      }
+      if (username.match(/[^a-zA-Z0-9]/g)) {
+        return setUserNameAvailability({
+          status: false,
+          message: "Username can only contain alphanumeric characters.",
+        }); // if the username contains spaces or special characters, don't check
+      }
 
       setUserNameAvailability({
         status: "checking",
         message: "checking availability",
       });
 
-      const response = await axiosConfig.post("/users/check/" + username);
+      const response = await UserService.checkUserNameAvailability(username);
       setUserNameAvailability(response.data); // status and message
     } catch (error) {
       setUserNameAvailability(error.response.data); // status and message
@@ -85,7 +99,13 @@ export const Signup = () => {
                 confirmPassWord: "",
               }}
               onSubmit={(values, { setSubmitting }) => {
-                UserService.signUpWithPassword(values, setSubmitting);
+                UserService.signUpWithPassword(values, setSubmitting).then(
+                  (res) => {
+                    if (res.status === 200) {
+                      navigate("/onboard");
+                    }
+                  }
+                );
               }}
               validationSchema={UserSchema.SignUpWithPasswordSchema}
             >
@@ -97,8 +117,6 @@ export const Signup = () => {
                 handleBlur,
                 handleSubmit,
                 isSubmitting,
-
-                /* and other goodies */
               }) => (
                 <form onSubmit={handleSubmit} className='mt-5'>
                   <div className='mb-4'>

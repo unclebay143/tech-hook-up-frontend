@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { FaLaptopCode } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import UserService from "../../../helper/service/user.service";
 import { ThemeToggle } from "../../theme/ThemeToggle";
 
 export const Header = () => {
-  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <React.Fragment>
@@ -104,9 +103,7 @@ export const Header = () => {
 
                 <div className='py-1' role='none'>
                   <button
-                    onClick={() => {
-                      navigate("/login");
-                    }}
+                    onClick={() => UserService.logOut()}
                     className='flex items-center w-full gap-1 px-4 py-2 text-sm font-semibold text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-500'
                     role='menuitem'
                     tabIndex={-1}

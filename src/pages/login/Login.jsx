@@ -160,11 +160,11 @@ export const Login = () => {
                   </div>
                   <div>
                     <button
-                      // onClick={handleLogin}
                       type='submit'
+                      disabled={isSubmitting}
                       className='w-full px-4 py-2 text-sm font-bold text-white bg-purple-700 rounded hover:bg-purple-800 focus:outline-none focus:shadow-outline'
                     >
-                      Sign In
+                      {isSubmitting ? "Signing In" : "Sign In"}
                     </button>
                     <a
                       className='inline-block mt-2 text-sm font-bold text-purple-500 align-baseline dark:text-white hover:text-purple-800'
